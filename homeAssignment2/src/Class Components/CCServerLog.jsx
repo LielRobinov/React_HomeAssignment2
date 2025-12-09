@@ -2,33 +2,33 @@ import { Component } from 'react'
 
 export default class CCServerLog extends Component {
   
-    constructor(props){
-        super(props)
+  constructor(props){
+    super(props)
 
-        this.state = {
-            logs : []
-        }
-        this.timerID = null;
+    this.state = {
+      logs : []
     }
+    
+    this.timerID = null;
+  }
 
-    //אחרי שהקומפוננטה נטענת ל-DOM הפונקציה הזו מופעלת רק פעם אחת!
+  //אחרי שהקומפוננטה נטענת ל-DOM הפונקציה הזו מופעלת רק פעם אחת!
   componentDidMount() {
     // setInterval = יצירת טיימר שמריץ את הפונקציה כל 2 שניות
     this.timerID = setInterval(() => {
 
-        //יצירת אובייקט חדש
-        const newLog = {
-            id : Date.now(),
-            message : "Server Check OK",
-            timestamp : new Date().toLocaleTimeString()
-        }
+      //יצירת אובייקט חדש
+      const newLog = {
+          id : Date.now(),
+          message : "Server Check OK",
+          timestamp : new Date().toLocaleTimeString()
+      }
 
-        //setInterval מחזיר מזהה משלו ולכן אנחנו מכניסים אותו למשתנה שכבר הגדרנו אותו בconstractor
-        this.setState({
-         //...this.state.logs = "מורח" את הנתונים שכבר היו קיימים במערך   
-         logs : [...this.state.logs , newLog]
-        })
-      
+      //setInterval מחזיר מזהה משלו ולכן אנחנו מכניסים אותו למשתנה שכבר הגדרנו אותו בconstractor
+      this.setState({
+      //...this.state.logs = "מורח" את הנתונים שכבר היו קיימים במערך   
+        logs : [...this.state.logs , newLog]
+      })
     }, 2000);
   }
 
@@ -39,22 +39,18 @@ export default class CCServerLog extends Component {
     clearInterval(this.timerID);
   }
 
-  
-    render() {
-
-
+  render() {
     return (
-      <>
+    <>
+    <h4>Server Log Component</h4> 
 
-      <div>Server Log Component</div>
+      {this.state.logs.map((log) => (
+        <div key={log.id}>
+        {log.message} | {log.timestamp}
+        </div>
+      ))}
 
-        {this.state.logs.map((log) => (
-          <p key={log.id}>
-            {log.id} | {log.message} | {log.timestamp}
-          </p>
-        ))}
-
-      </>
+    </>
     )
   }
 }

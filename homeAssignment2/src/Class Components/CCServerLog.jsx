@@ -16,6 +16,7 @@ export default class CCServerLog extends Component {
   componentDidMount() {
     // setInterval = יצירת טיימר שמריץ את הפונקציה כל 2 שניות
     this.timerID = setInterval(() => {
+      console.log("Interval is running"); 
 
       //יצירת אובייקט חדש
       const newLog = {
@@ -32,9 +33,10 @@ export default class CCServerLog extends Component {
     }, 2000);
   }
 
-  //כאשר הקומפוננטה CCServelLog מוסרת מה-DOM אז הפונקציה הזו מופעלת באופן אוטומטי ומנסה זיכרון
+  //כאשר הקומפוננטה CCServelLog מוסרת מה-DOM אז הפונקציה הזו מופעלת באופן אוטומטי ומוחקת זיכרון
   //לדוגמא: המשתמש עבר לדף אחר ואז קומפוננטה אחרת מחליפה אותה
   componentWillUnmount(){
+      console.log("ServerLog UNMOUNTED!");
     //clearInterval מנקה את הטיימר כדי למנוע דליפת זיכרון
     clearInterval(this.timerID);
   }
